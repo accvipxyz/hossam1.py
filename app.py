@@ -3,7 +3,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Callb
 import random
 import time
 
-TOKEN = '6870143125:AAFP4iGAYL5bFOZ-Pnz5w20AIfMDWupCtew'
+TOKEN = '6716862667:AAHrZ5Z0Z0Nm3VTWvVn8wQVcHAZdnBRdmmk'
 
 azkar_list = [
     "اللهم بك أصبحنا وبك أمسينا وبك نحيا وبك نموت وإليك المصير.",
