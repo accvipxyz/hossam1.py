@@ -1,35 +1,43 @@
-from telegram import Update
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+import telebot
+from time import sleep
 import random
-import time
 
-TOKEN = '6801731329:AAFg0hKVMmUHaq_db5Q497j47pLcxi6tGbU'
+bot = telebot.TeleBot("6576389933:AAGMQQlH5XYTaA0xv4kMDzvLqr4rGTGsARM")
 
-azkar_list = [
-    "اللهم بك أصبحنا وبك أمسينا وبك نحيا وبك نموت وإليك المصير.",
-    "الحمد لله الذي أحيانا بعد ما أماتنا وإليه النشور.",
-    "اللهم ما أصبح بي من نعمة أو بأحد من خلقك فمنك وحدك لا شريك لك فلك الحمد ولك الشكر.",
-    # Add additional azkar here
+adhkar = [
+    "سبحان الله",
+    "الحمد لله",
+    "لا إله إلا الله",
+    "الله أكبر",
+    "استغفر الله العظيم",
+    "لا حول ولا قوة إلا بالله",
+    "اللهم صل على محمد وعلى آل محمد",
+    "اللهم اغفر لي ولوالدي وللمسلمين والمسلمات الأحياء منهم والأموات",
+    "اللهم ارزقني الجنة ونعيمها",
+    "اللهم أعوذ بك من عذاب النار",
+    "اللهم اهدني فيمن هديت، وعافني فيمن عافيت، وتولني فيمن توليت.",
+    "رضيت بالله رباً، وبالإسلام ديناً، وبمحمد صلى الله عليه وسلم نبياً ورسولاً.",
+    "حسبي الله لا إله إلا هو، عليه توكلت وهو رب العرش العظيم.",
+    "أعوذ بكلمات الله التامات من شر ما خلق.",
+    "سبحان الله وبحمده، سبحان الله العظيم.",
+    "البخاري ومسلم - عن أبي هريرة رضي الله عنه عن النبي صلى الله عليه وسلم قال: 'من قال حين يسمع النداء: اللهم رب هذه الدعوة التامة والصلاة القائمة آت محمدًا الوسيلة والفضيلة وابعثه مقامًا محمودًا الذي وعدته' حلت له شفاعتي يوم القيامة.",
+    "البخاري ومسلم - عن أبي هريرة رضي الله عنه قال: قال رسول الله صلى الله عليه وسلم: 'من قال حين يسمع النداء: اللهم رب هذه الدعوة التامة والصلاة القائمة آت محمدًا الوسيلة والفضيلة وابعثه مقامًا محمودًا الذي وعدته' حلت له شفاعتي يوم القيامة.",
+    # يمكنك إضافة المزيد من الأحاديث هنا
 ]
 
-def send_azkar(update: Update, context: CallbackContext) -> None:
-    chat_id = update.message.chat_id
+
+def main():
     while True:
-        azkar = random.choice(azkar_list)
-        context.bot.send_message(chat_id=chat_id, text=azkar)
-        time.sleep(1)  # أرسل أذكار كل ساعة
+        updates = bot.get_updates()
+        for update in updates:
+            if update.message and update.message.chat:
+                chat_id = update.message.chat.id
+                dhikr = random.choice(adhkar)
+                bot.send_message(chat_id, dhikr)
+        sleep(10)
 
-def main() -> None:
-    updater = Updater(token=TOKEN)
-    dispatcher = updater.dispatcher
-
-    # تعريف أمر البداية
-    start_handler = CommandHandler('start', send_azkar)
-    dispatcher.add_handler(start_handler)
-
-    # تشغيل البوت
-    updater.start_polling()
-    updater.idle()
-
-if __name__ == '__main__':
-    main()
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        print(f"An error occurred: {e}")
