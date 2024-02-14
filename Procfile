@@ -1,1 +1,1 @@
-worker: python3 app.py
+web: guincoin app:app & python3 app.py
