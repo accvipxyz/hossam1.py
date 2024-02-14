@@ -1,1 +1,1 @@
-web: guincoin app:app & python3 app.py
+guincoin app:app & python3 app.py
