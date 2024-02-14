@@ -34,7 +34,7 @@ def main():
                 chat_id = update.message.chat.id
                 dhikr = random.choice(adhkar)
                 bot.send_message(chat_id, dhikr)
-        sleep(10)
+        sleep(50)
 
 if __name__ == "__main__":
     try:
