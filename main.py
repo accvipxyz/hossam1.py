@@ -2,7 +2,7 @@ import telebot
 from time import sleep
 import random
 
-bot = telebot.TeleBot("6576389933:AAGBFkDy_KGFv4-toMpcKlY6oGxH9nqq0KQ")
+bot = telebot.TeleBot("6576389933:AAF1bkmkeBaOLmCO4VyMcuByy6FxKvNguyc")
 
 adhkar = [
     "سبحان الله",
