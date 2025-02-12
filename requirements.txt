@@ -1,4 +1,2 @@
-telebot
-pyTelegramBotAPI
-random
-time
+telethon
+python-dotenv
