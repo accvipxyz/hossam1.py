@@ -31,7 +31,7 @@ def normalize_number(number: str) -> str:
     """تطبيع رقم الهاتف بإزالة الرموز غير الضرورية"""
     return re.sub(r"[+\s\-()]", "", number)
 
-app = Client("bo77t", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
+app = Client("bo7117t", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
 @app.on_message(filters.command("start"))
 async def start_handler(client: Client, message: Message):
