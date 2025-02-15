@@ -1,24 +1,20 @@
 import re
 import logging
-import asyncio
 from datetime import datetime, timedelta
-from pyrogram import Client, filters
+from pyrogram import Client, filters, idle
 from pyrogram.types import KeyboardButton, ReplyKeyboardMarkup, Message
 from pyrogram.errors import ChatAdminRequired
 
-# إعدادات تسجيل الأخطاء
-logging.basicConfig(level=logging.INFO)
-
-# بيانات البوت
+# بيانات البوت والحساب
 api_id = 28477626
 api_hash = "ffd0faf3767db33b6a2b0f727a5a60e0"
 bot_token = "7348415101:AAGaVhL-ttaGzVbMMP72JR3rr79g-9aXqiU"
 
 # إعدادات المجموعة
-GROUP_ID = -1002282956556
-FORWARD_ID = 5599020702  
+GROUP_ID = -1002282956556  # تأكد من أن البوت موجود في هذه المجموعة وأنه مشرف
+FORWARD_ID = 5599020702    # معرف الشخص الذي ستُحوّل إليه جهات الاتصال
 
-# قائمة الأرقام المسموح بها
+# قائمة أرقام الهواتف المسموح بها
 ALLOWED_NUMBERS = {
     "+201153275800",
     "+201145189549",
@@ -28,7 +24,7 @@ ALLOWED_NUMBERS = {
 # تخزين الأرقام التي تمت معالجتها
 processed_numbers = set()
 
-# تطبيع الأرقام عند التشغيل
+# تطبيع الأرقام المسموحة عند التشغيل
 normalized_allowed = {re.sub(r"[+\s\-()]", "", num) for num in ALLOWED_NUMBERS}
 
 def normalize_number(number: str) -> str:
@@ -70,7 +66,7 @@ async def contact_handler(client: Client, message: Message):
         return
     
     try:
-        # إنشاء رابط دعوة مؤقت
+        # إنشاء رابط دعوة مؤقت باستخدام معرف المجموعة (الذي تأكدنا من تحميل بياناته عند بدء التشغيل)
         invite = await client.create_chat_invite_link(
             chat_id=GROUP_ID,
             expire_date=datetime.now() + timedelta(hours=1),
@@ -90,24 +86,23 @@ async def contact_handler(client: Client, message: Message):
         await message.reply("❌ حدث خطأ غير متوقع!", protect_content=True)
 
 async def init_group():
-    """تحميل بيانات المجموعة عند بدء تشغيل البوت"""
+    """
+    دالة تحميل بيانات المجموعة عند بدء تشغيل البوت.
+    تأكد من أن البوت عضو في المجموعة وأنه مشرف.
+    """
     try:
         chat = await app.get_chat(GROUP_ID)
         logging.info(f"✅ تم تحميل بيانات المجموعة: {chat.title} (ID: {chat.id})")
     except Exception as e:
         logging.error(f"❌ خطأ في تحميل بيانات المجموعة: {e}")
 
-async def main():
-    """تشغيل البوت بشكل صحيح"""
-    try:
-        await app.start()
-        await init_group()
-        logging.info("✅ البوت يعمل الآن...")
-        await asyncio.Event().wait()  # منع إيقاف التشغيل
-    except Exception as e:
-        logging.error(f"❌ خطأ أثناء تشغيل البوت: {e}")
-    finally:
-        await app.stop()
-
 if __name__ == "__main__":
-    asyncio.run(main())
+    async def main():
+        await app.start()
+        # تحميل بيانات المجموعة عند بدء التشغيل
+        await init_group()
+        print("✅ البوت يعمل الآن...")
+        await idle()
+        await app.stop()
+        
+    app.run(main())
