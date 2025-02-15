@@ -8,7 +8,7 @@ from pyrogram.errors import ChatAdminRequired
 # بيانات البوت والحساب
 api_id = 28477626
 api_hash = "ffd0faf3767db33b6a2b0f727a5a60e0"
-bot_token = "7348415101:AAHFTemybrlj6ze_zL7oNHrPK_SEvZn2LA4"
+bot_token = "7348415101:AAGaVhL-ttaGzVbMMP72JR3rr79g-9aXqiU"
 
 # إعدادات المجموعة
 GROUP_ID = -1002282956556  # تأكد من أن البوت موجود في هذه المجموعة وأنه مشرف
